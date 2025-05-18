@@ -20,7 +20,7 @@ export function createSession(options: SessionOpts = { }) {
 
   async function fetchWithContext(
     input: RequestInfo,
-    init: RequestInit & { client?: Deno.HttpClient } = { }
+    init: RequestInit & { client?: Deno.HttpClient, timeout?: number } = { }
   ): Promise<Response> {
     const url = typeof input === "string" ? input : input.url;
 
@@ -43,8 +43,10 @@ export function createSession(options: SessionOpts = { }) {
     });
 
     try {
-      /** @TODO Optional timeout per request */
-      const abortTimeout = setTimeout(() => controller.abort(), 5 * 1000);
+      const abortTimeout = setTimeout(
+        () => controller.abort(),
+        (init.timeout ?? 5 * 1000)
+      );
 
       const response = await fetch(request);
       clearTimeout(abortTimeout);
