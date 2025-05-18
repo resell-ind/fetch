@@ -1,11 +1,12 @@
 /** Types */
 export type SessionOpts = {
   defaultHeaders?: HeadersInit,
-  proxyManager?: IProxyManager
+  proxy?: string
 }
 
 export type SessionContext = {
-  jar: ICookieJar
+  jar: ICookieJar,
+  client?: Deno.HttpClient
 }
 
 /** Interfaces */
@@ -32,26 +33,6 @@ export interface ICookieJar {
    * Clears all stored cookies
    */
   clear(): void;
-}
-
-export interface IProxyManager {
-  /** 
-   * Returns the next proxy URL or `undefined`
-   * if there's no proxies left in the pool
-  */
-  next(): Promise<string | undefined> | string | undefined;
-
-  /**
-   * Optional function that reports when a
-   * proxy failed due to a ratelimit or some other
-   * third party issue
-   */
-  fail?(proxy: string, error: Error): void;
-
-  /**
-   * Optional function to reset the state (bans, counters)
-   */
-  reset?(): void;
 }
 
 /** External Types */

@@ -13,9 +13,14 @@ export function createSession(options: SessionOpts = { }) {
     jar: new CookieJar()
   }
 
+  if(options.proxy)
+    ctx.client = Deno.createHttpClient({
+      proxy: { url: options.proxy }
+    });
+
   async function fetchWithContext(
     input: RequestInfo,
-    init: RequestInit = { }
+    init: RequestInit & { client?: Deno.HttpClient } = { }
   ): Promise<Response> {
     const url = typeof input === "string" ? input : input.url;
 
@@ -27,7 +32,7 @@ export function createSession(options: SessionOpts = { }) {
     if(ctx.jar.hasCookies(url))
       headers.set("Cookie", ctx.jar.getCookieHeader(url));
 
-    /** @TODO Add proxy implementation */
+    if(ctx.client) init.client = ctx.client;
 
     const controller = new AbortController();
 
@@ -53,14 +58,19 @@ export function createSession(options: SessionOpts = { }) {
     }
   }
 
+  function close() {
+    /** Attempt to close the `Deno.HttpClient` */
+    ctx.client?.close();
+
+    ctx.jar.clear();
+  }
+
   return {
     fetch: fetchWithContext,
+    close,
 
     clearCookies: () => ctx.jar.clear(),
-    getCookieJar: () => ctx.jar,
-
-    setProxyManager: (manager: typeof options.proxyManager) =>
-      (options.proxyManager = manager)
+    getCookieJar: () => ctx.jar
   }
 }
 
