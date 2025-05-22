@@ -1,12 +1,12 @@
 /** Dependencies */
-import { CookieJar } from "@src/core";
+import { CookieJar } from "./src/core/mod.ts";
 
 /** Types */
 import {
   type SessionOpts,
 
   SessionContext,
-} from "@src/types";
+} from "./src/types/mod.ts";
 
 export function createSession(options: SessionOpts = { }) {
   const ctx: SessionContext = {
@@ -76,4 +76,4 @@ export function createSession(options: SessionOpts = { }) {
   }
 }
 
-export * from "@src/types";
+export * from "./src/types/mod.ts";

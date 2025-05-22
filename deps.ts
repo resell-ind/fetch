@@ -1,2 +1,2 @@
 /** Standard Library */
-export { getSetCookies } from "@std/http/cookie";
+export { getSetCookies } from "jsr:@std/http/cookie";

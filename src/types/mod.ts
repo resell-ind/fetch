@@ -36,4 +36,4 @@ export interface ICookieJar {
 }
 
 /** External Types */
-export type { Cookie } from "@std/http/cookie";
+export type { Cookie } from "jsr:@std/http/cookie";

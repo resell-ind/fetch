@@ -1,12 +1,12 @@
 /** Dependencies */
-import { getSetCookies } from "@deps";
+import { getSetCookies } from "../../deps.ts";
 
 /** Types */
 import {
   type Cookie,
 
   ICookieJar
-} from "@src/types";
+} from "../types/mod.ts";
 
 export class CookieJar implements ICookieJar {
   private cookies = new Map<string, Cookie[]>();

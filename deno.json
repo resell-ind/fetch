@@ -1,10 +1,1 @@
-{
-  "imports": {
-    "@std/http": "jsr:@std/http@^1.0.16",
-
-    "@deps": "./deps.ts",
-    "@src/types": "./src/types/mod.ts",
-
-    "@src/core": "./src/core/mod.ts"
-  }
-}
+{}
