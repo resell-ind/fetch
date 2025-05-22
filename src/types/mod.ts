@@ -10,6 +10,17 @@ export type SessionContext = {
 }
 
 /** Interfaces */
+export interface ISession {
+  fetch: (input: RequestInfo, init?: RequestInit & {
+      client?: Deno.HttpClient;
+      timeout?: number;
+  }) => Promise<Response>;
+
+  close: () => void;
+  clearCookies: () => void;
+  getCookieJar: () => ICookieJar;
+}
+
 export interface ICookieJar {
   /**
    * Attempts to parse cookies from the `Set-Cookie`

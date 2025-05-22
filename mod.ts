@@ -4,11 +4,12 @@ import { CookieJar } from "./src/core/mod.ts";
 /** Types */
 import {
   type SessionOpts,
+  type SessionContext,
 
-  SessionContext,
+  ISession
 } from "./src/types/mod.ts";
 
-export function createSession(options: SessionOpts = { }) {
+export function createSession(options: SessionOpts = { }): ISession {
   const ctx: SessionContext = {
     jar: new CookieJar()
   }
